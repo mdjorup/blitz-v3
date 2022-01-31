@@ -1,0 +1,51 @@
+GET: retrieves information
+POST: Creates new information
+PUT: Updates information
+
+
+Authentication: /auth
+register: POST /register
+ - create new user in firebase
+ - create user in mongodb
+log In : PUT /login
+ - sign in user from firebase 
+ - update last signed in property in db
+sign Out: PUT /logout
+ - sign out user in firebase
+
+
+User Information /user
+update: PUT /update
+ - update user info stored in mongodb
+
+
+Picks /picks
+submit: POST /submit
+ - submits the picks selected by frontend
+get: GET /get
+ - gets previous picks from backend
+
+
+Games /games
+GET /:season/:type/:week
+ - gets all games for the selected week
+ - data from sportsdataio
+
+GET /:season
+ - gets all regular season games for the selected season
+ - data from sportsdataio
+
+blitzpoints: GET /blitzpoints/:gameId
+ - gets the amount of points a user gets if correctly picks 
+ - Ex: if spread is 0, each team would have 5 blitzpoints
+ - Ex: if spread is 6, favored team would get 3, unfavored team would get 7
+
+vote: GET /vote/:gameId
+ - gets the voted win percentage for each team
+ - not sure if this is needed, but maybe good to have
+
+
+ Groups
+ Do later
+
+
