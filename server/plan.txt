@@ -1,0 +1,26 @@
+Goal: create a football picking app using the following integrations: 
+ - Frontend:
+   - React 
+   - Redux
+     - Manages all non-ui state of app to prevent redundant api calls including user
+   - Tailwind CSS 
+     - easier to edit and read css
+ - Backend:
+   - Node 
+   - Express
+     - create api endpoints to interact with mongodb and firebase auth
+   - MongoDB
+     - stores database for the application
+   - Firebase Authentication
+     - manages authentication 
+
+Long process: 
+1) Design layout for ui
+2) Create all pages and components to implement ui
+3) Design api 
+4) Create api skeleton (all functions created without implementation)
+5) implement ui authentication pages
+6) implement server authentication functions
+7) connect to sportsdataio api and store with redux (all non ui state data goes in redux)
+8) implement all ui without functionality (except for navigation)
+9) implement api skeleton
