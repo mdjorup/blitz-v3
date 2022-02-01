@@ -14,7 +14,8 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Home />}/>
-        <Route path='/auth' element={<Auth />}/>
+        <Route path='/login' element={<Auth type='login'/>}/>
+        <Route path='/register' element={<Auth type='register'/>}/>
         <Route path='/groups/find' element={<FindGroups />}/>
         <Route path='/groups/:groupid' element={<Group />}/>
         <Route path='/makepicks' element={<MakePicks />}/>

@@ -5,7 +5,7 @@ function Home() {
 
 
   return (
-    <div className="bg-slate-800 h-screen">
+    <div className="bg-backdrop h-screen">
       <Header />
       
     </div>

@@ -10,7 +10,7 @@ function Button({text, icon, type, onClick}) {
   return (
     <div>
       {type==='primary' && <button 
-        className={`flex items-center space-x-1.5 text-slate-200 font-bold bg-blue-500 p-2.5 rounded-lg hover:bg-blue-600`} 
+        className={`flex items-center space-x-1.5 text-slate-200 font-bold bg-lightblue p-2.5 rounded-lg hover:bg-opacity-75`} 
         onClick={onClick}>
           {icon && <IconContext.Provider value={{color: '#EEEEEE', size: '1.25em'}}>
             {icon}
@@ -18,7 +18,7 @@ function Button({text, icon, type, onClick}) {
           <div>{text}</div>
       </button>}
       {type==='secondary'&&<button 
-        className={`text-blue-50 bg-transparent p-2.5 rounded-lg border border-blue-50 hover:text-blue-400 hover:border-blue-400`} 
+        className={`text-white bg-transparent p-2.5 rounded-lg border border-white hover:text-lightblue hover:border-lightblue`} 
         onClick={onClick}>
           {icon && <IconContext.Provider value={{color: '#EEEEEE', size: '1.25em'}}>
             {icon}
@@ -26,7 +26,7 @@ function Button({text, icon, type, onClick}) {
           <div>{text}</div>
       </button>}
       {type==='tertiary'&&<button 
-        className={`text-blue-50 bg-transparent p-2.5 hover:text-blue-400`} 
+        className={`text-white bg-transparent p-2.5 hover:text-lightblue`} 
         onClick={onClick}>
           {icon && <IconContext.Provider value={{color: '#EEEEEE', size: '1.25em'}}>
             {icon}
