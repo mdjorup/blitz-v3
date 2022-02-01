@@ -26,7 +26,7 @@ function Button({text, icon, type, onClick}) {
           <div>{text}</div>
       </button>}
       {type==='tertiary'&&<button 
-        className={`text-blue-50 bg-transparent p-2.5 hover:text-blue-400 hover:border-b hover:border-blue-400`} 
+        className={`text-blue-50 bg-transparent p-2.5 hover:text-blue-400`} 
         onClick={onClick}>
           {icon && <IconContext.Provider value={{color: '#EEEEEE', size: '1.25em'}}>
             {icon}
