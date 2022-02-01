@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import {getAuth} from 'firebase/auth';
+const initializeApp = require('firebase/app').initializeApp;
+const getAuth = require('firebase/auth').getAuth;
 const dotenv = require('dotenv').config();
 
 const firebaseConfig = {
@@ -16,5 +16,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-export {app, auth}
+module.exports = {
+  app,
+  auth,
+}
 

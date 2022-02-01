@@ -14,6 +14,14 @@ Goal: create a football picking app using the following integrations:
    - Firebase Authentication
      - manages authentication 
 
+authentication notes
+- on sign in and register,
+- send a response back with the user object that is authenticated
+- Need to ensure that user only makes requests when authenticated
+- We do this by creating a middleware, which checks to see if user making request is authenticated
+- On sign out, this will make the user not able to make any more user-dependent requests
+- 
+
 Long process: 
 1) Design layout for ui
 2) Create all pages and components to implement ui
