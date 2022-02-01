@@ -1,9 +1,9 @@
-const initializeApp = require('firebase/app').initializeApp;
-const getAuth = require('firebase/auth').getAuth;
-const dotenv = require('dotenv').config();
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import {getAuth} from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: "AIzaSyD21OMGaSlnr8OaY2ulgwQrNyQpgP2FJW8",
   authDomain: "blitz-v0.firebaseapp.com",
   projectId: "blitz-v0",
   storageBucket: "blitz-v0.appspot.com",
@@ -14,10 +14,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+//const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-module.exports = {
-  app,
-  auth,
-}
 
+export {app, auth};
