@@ -5,11 +5,14 @@ import {SiBetfair} from 'react-icons/si'
 
 import {auth} from '../firebase.js';
 import {signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import {setUser} from '../reducers/userReducer.js';
 
 
 function Auth({type}) {
 
-
+  const user = useSelector((state) => state.user.user) // this refers to the reducer
+  const dispatch = useDispatch();
 
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,9 +33,13 @@ function Auth({type}) {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         //add user to redux state - header then needs to render right corner differently
+        dispatch(setUser(userCredential.user))
+
         //add user to db
-        setLoading(false)
+
+
         navigate('/')
+        
       })
       .catch((error) => {
         setLoading(false)
@@ -50,6 +57,8 @@ function Auth({type}) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         //add login time to db
+        dispatch(setUser(userCredential.user));
+
         setLoading(false)
         navigate('/')
       }).catch((error) => {
@@ -99,7 +108,6 @@ function Auth({type}) {
               onChange={event => setPassword(event.target.value)}></input>
           </div>
           <p className='text-error'>{errorMessage}</p>
-
           <div className='text-white flex justify-center'>
             <Button className='object-center' text='Submit' type='primary' onClick={type==='register' ? handleRegister : handleLogin}></Button>
           </div>
