@@ -8,7 +8,7 @@ export const userSlice = createSlice({
   reducers: {
     clearUser: (state) => {
       console.log("clearuser reached")
-      state.user = {};
+      state.user = null;
     },
     setUser: (state, action) => {
       state.user = action.payload;

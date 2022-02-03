@@ -10,6 +10,8 @@ import Scores from './pages/Scores.js'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 function App() {
+
+  // on page load, need to add user from firebase auth to redux
   return (
     <Router>
       <Routes>

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { clearUser } from '../reducers/userReducer';
 
 import Button from './Button';
@@ -10,15 +10,13 @@ import {CgProfile} from 'react-icons/cg';
 import {auth} from '../firebase.js'
 import {signOut} from 'firebase/auth';
 
-function Header() {
+function Header({user}) {
 
-  const user = useSelector((state) => state.user.user) // this refers to the reducer
+  //const user = //useSelector((state) => state.user.user) // this refers to the reducer
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
   
-  useEffect(()=> {}, [user]);
-
   const handleLogout = () => {
     console.log("logout pressed")
     signOut(auth).then(() => {
@@ -38,7 +36,6 @@ function Header() {
         <SiBetfair color='#22D3EE' size={40} />
         <div className='text-white text-2xl font-semibold'>Blitz</div>
       </div>
-      {user && JSON.stringify(user)}
       {/* header right  */}
       <div className='flex'>
         <div className='flex border-r border-white px-5'>
@@ -61,4 +58,10 @@ function Header() {
   );
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+  }
+}
+
+export default connect(mapStateToProps)(Header);
