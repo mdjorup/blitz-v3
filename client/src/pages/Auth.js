@@ -4,14 +4,13 @@ import Button from '../components/Button.js';
 import {SiBetfair} from 'react-icons/si'
 
 import {auth} from '../firebase.js';
-import {signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import {signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
+import { useDispatch } from 'react-redux';
 import {setUser} from '../reducers/userReducer.js';
 
 
 function Auth({type}) {
 
-  const user = useSelector((state) => state.user.user) // this refers to the reducer
   const dispatch = useDispatch();
 
   const [displayName, setDisplayName] = useState("");
@@ -31,13 +30,31 @@ function Auth({type}) {
     };
 
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then( async (userCredential) => {
         //add user to redux state - header then needs to render right corner differently
+        
+        
+        //authenticate and add to firebase
+        await updateProfile(userCredential.user, {
+          displayName: displayName,
+        })
+
+        //add user to state
         dispatch(setUser(userCredential.user))
 
         //add user to db
+        await fetch("http://localhost:5000/auth/register", {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            _id: userCredential.user.uid,
+            displayName: displayName,
+            email: email,
+            password: password,
+          })
+        })
 
-
+        setLoading(false)
         navigate('/')
         
       })

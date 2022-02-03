@@ -47,6 +47,7 @@ function Header({user}) {
         <div className='flex px-5 space-x-4 items-center'>
           {!user && <Button text='Login' type='tertiary' onClick={()=> navigate('/login')}></Button>}
           {!user && <Button text='Register' type='primary' onClick={() =>navigate('/register')}></Button>}
+          {user && <p className='text-lightblue'>{user.displayName}</p>}
           {user && <Button text='Log out' type='tertiary' onClick={handleLogout}></Button>}
           {user && <CgProfile color='#CCCCCC' size={25}/>}
 
