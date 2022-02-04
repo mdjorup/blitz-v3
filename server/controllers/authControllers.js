@@ -6,30 +6,36 @@ const authRegister = (req, res) => {
     _id: req.body._id,
     displayName: req.body.displayName,
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    lastLoggedIn: req.body.time,
   });
   user.save()
-      .then(data => {})
+      .then(data => {
+        return res.send({'message': "Successful register"})
+      })
       .catch(err => {
         console.log(err);
-      });
-  console.log("successful register")
-  
+        return res.send({"message": "Unsuccessful register"})
+      });  
 }
   
-
+//req: _id, time
 const authLogin = (req, res) => {
-  console.log("post request for login called");
-  
-}
+  User.findById(req.body._id)
+    .then( async (user) => {
+      user.lastLoggedIn = req.body.time;
+      await user.save();
+      return res.send({"message": "Successful login"})
+    }).catch(err => {
+      console.log(err)
+      return res.send({"message": "Unsuccessful login"})
+    })
 
-const authLogout = (req, res) => {
-  console.log("post request for signout called");
+  console.log("post request for login called");
   
 }
 
 module.exports = {
   authRegister,
   authLogin,
-  authLogout,
 }

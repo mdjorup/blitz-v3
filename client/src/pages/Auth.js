@@ -5,6 +5,8 @@ import {SiBetfair} from 'react-icons/si'
 
 import {auth} from '../firebase.js';
 import {signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
+import {Timestamp} from 'firebase/firestore';
+
 import { useDispatch } from 'react-redux';
 import {setUser} from '../reducers/userReducer.js';
 
@@ -31,17 +33,12 @@ function Auth({type}) {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then( async (userCredential) => {
-        //add user to redux state - header then needs to render right corner differently
-        
-        
         //authenticate and add to firebase
         await updateProfile(userCredential.user, {
           displayName: displayName,
         })
-
         //add user to state
         dispatch(setUser(userCredential.user))
-
         //add user to db
         await fetch("http://localhost:5000/auth/register", {
           method: "POST",
@@ -51,6 +48,7 @@ function Auth({type}) {
             displayName: displayName,
             email: email,
             password: password,
+            time: Timestamp.now().toDate(),
           })
         })
 
@@ -72,9 +70,17 @@ function Auth({type}) {
       return;
     };
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then( async (userCredential) => {
         //add login time to db
         dispatch(setUser(userCredential.user));
+        await fetch('http://localhost:5000/auth/login', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            _id: userCredential.user.uid,
+            time: Timestamp.now().toDate(),
+          })
+        })
 
         setLoading(false)
         navigate('/')
