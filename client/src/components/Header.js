@@ -30,7 +30,7 @@ function Header({user}) {
 
   //Need to implement clicking operations
   return (
-    <div className="h-20 w-full z-50 absolute top-0 bg-transparent border-b border-subtle flex items-center justify-between">
+    <div className="h-20 w-full z-50 sticky top-0 bg-backdrop border-b border-subtle flex items-center justify-between">
       {/* header left */}
       <div className='flex items-center space-x-4 pl-5 cursor-pointer' >
         <SiBetfair color='#22D3EE' size={40} />

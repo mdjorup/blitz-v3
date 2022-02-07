@@ -26,6 +26,11 @@ get: GET /get
  - gets previous picks from backend
 
 
+ Teams /teams
+ logos: GET /logos
+ To be continued
+
+
 Games /games
 GET /:season/:type/:week
  - gets all games for the selected week

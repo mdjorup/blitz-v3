@@ -9,20 +9,23 @@ import Scores from './pages/Scores.js'
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
+
 function App() {
+
+
 
   // on page load, need to add user from firebase auth to redux
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home />}/>
-        <Route path='/login' element={<Auth type='login'/>}/>
-        <Route path='/register' element={<Auth type='register'/>}/>
-        <Route path='/groups/find' element={<FindGroups />}/>
-        <Route path='/groups/:groupid' element={<Group />}/>
-        <Route path='/makepicks' element={<MakePicks />}/>
-        <Route path='/nfl/standings' element={<NFLStandings />}/>
-        <Route path='/nfl/scores' element={<Scores />}/>
+        <Route exact path='/' element={<Home />}/>
+        <Route exact path='/login' element={<Auth type='login'/>}/>
+        <Route exact path='/register' element={<Auth type='register'/>}/>
+        <Route exact path='/groups/find' element={<FindGroups />}/>
+        <Route exact path='/groups/:groupid' element={<Group />}/>
+        <Route exact path='/makepicks' element={<MakePicks />}/>
+        <Route exact path='/nfl/standings' element={<NFLStandings />}/>
+        <Route exact path='/nfl/scores' element={<Scores />}/>
       </Routes>
       
     </Router>
