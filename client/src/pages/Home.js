@@ -24,6 +24,7 @@ function Home() {
   const dispatch = useDispatch();
   const logos = useSelector((state) => state.logos.data);
 
+
   useEffect(() => {
     const fetchTeamsLogos = async () => {
       const response = await fetch('http://localhost:3000/teams/logos');
@@ -37,15 +38,21 @@ function Home() {
     <div className="bg-backdrop min-h-screen">
       <Header />
       {/* body */}
-      <div className='flex top-20 text-white'>
-        <div className='flex-none w-52 bg-focus rounded m-5'>
+      <div className='flex top-20 text-white px-20 pt-5'>
+        <div className='flex-none w-52 bg-focus rounded mx-5'>
           <p className='text-xl font-semibold p-3 border-b border-subtle mb-1'>Teams</p>
           {logos && logos.map((entry) => (<TeamEntry key={entry.Key} name={entry.FullName} logo={entry.WikipediaLogoUrl}/>))}
           {/* {teamsWithLogos} */}
 
         </div>
         <div className='flex-1'>
-          Center
+          <div className='bg-focus  rounded'>
+            User Stats if user or global stats if no user
+          </div>
+          <br></br>
+          <div className='bg-focus  rounded'>
+            2021
+          </div>
         </div>
 
       </div>
