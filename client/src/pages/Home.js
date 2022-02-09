@@ -13,7 +13,7 @@ const TeamEntry = ({name, logo}) => {
   return(
     <div className='flex items-center justify-between px-5 font-light hover:text-lightblue cursor-pointer'>
       <p className=''>{name.substr(name.lastIndexOf(' ') + 1)}</p>
-      <img className='h-8 w-8' src={logo}/>
+      {logo && <img className='h-8 w-8' src={logo}/>}
 
     </div>
   )
@@ -28,16 +28,6 @@ function Home() {
   const seasonInfo = useSelector((state) => state.season)
 
 
-  useEffect(() => {
-    
-    if (logos) {return}
-    axios.get('http://localhost:3000/teams/logos')
-      .then(response => {
-        dispatch(setLogos(response.data))
-      }).catch(error => {})
-
-  }, [])
-
   return (
     <div className="bg-backdrop min-h-screen">
       <Header />
@@ -45,8 +35,7 @@ function Home() {
       <div className='flex top-20 text-white px-40 pt-5'>
         <div className='flex-none w-52 bg-focus rounded mx-5'>
           <p className='text-xl font-semibold p-3 border-b border-subtle mb-1'>Teams</p>
-          {logos && logos.map((entry) => (<TeamEntry key={entry.Key} name={entry.FullName} logo={entry.WikipediaLogoUrl}/>))}
-          {/* {teamsWithLogos} */}
+          {logos && Object.keys(logos).map((key) => (<TeamEntry key={key} name={logos[key].FullName} logo={logos[key].Logo}/>))}
 
         </div>
         <div className='flex-1'>

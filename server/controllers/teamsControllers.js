@@ -22,7 +22,18 @@ const getAllLogos = (req, res) => {
 
   axios.get(url)
     .then(response => {
-      const result = response.data.map(({Key, FullName, WikipediaLogoUrl}) => ({Key, FullName, WikipediaLogoUrl}))
+      const result = {}
+      response.data.forEach(element => {
+        result[element.Key] = {
+          'FullName': element.FullName,
+          "PrimaryColor": element.PrimaryColor,
+          "SecondaryColor": element.SecondaryColor,
+          "TertiaryColor": element.TertiaryColor,
+          "QuaternaryColor": element.QuaternaryColor,
+          'Logo': element.WikipediaLogoUrl,
+        }
+      });
+      //const result = response.data.map(({Key, FullName, WikipediaLogoUrl}) => ({Key, FullName, WikipediaLogoUrl}))
       res.send(result)
     })
     .catch(error => {

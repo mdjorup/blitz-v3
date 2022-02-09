@@ -14,12 +14,27 @@ import axios from 'axios'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { API_KEY } from './admin';
 import { useDispatch } from 'react-redux';
+import { setLogos } from './reducers/logosReducer';
 import { setCurrentType, setCurrentYear, setCurrentWeek } from './reducers/seasonReducer';
 
 
 function App() {
 
+  
+
   const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    const fetchLogos = async () => {
+      await axios.get('http://localhost:3000/teams/logos')
+        .then(response => {
+          dispatch(setLogos(response.data))
+        }).catch(error => {})
+    }
+    fetchLogos();
+
+  }, [])
 
   useEffect(() => {
     axios.get(`https://api.sportsdata.io/v3/nfl/scores/json/CurrentSeason?key=${API_KEY}`)
