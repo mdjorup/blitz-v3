@@ -7,10 +7,37 @@ import MakePicks from './pages/MakePicks.js'
 import NFLStandings from './pages/NFLStandings.js'
 import Scores from './pages/Scores.js'
 
+import { useEffect } from 'react';
+
+import axios from 'axios'
+
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { API_KEY } from './admin';
+import { useDispatch } from 'react-redux';
+import { setCurrentType, setCurrentYear, setCurrentWeek } from './reducers/seasonReducer';
 
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios.get(`https://api.sportsdata.io/v3/nfl/scores/json/CurrentSeason?key=${API_KEY}`)
+      .then(response => {
+        dispatch(setCurrentYear(response.data))
+      }).catch(error => console.log(error))
+    axios.get(`https://api.sportsdata.io/v3/nfl/scores/json/CurrentWeek?key=${API_KEY}`)
+      .then(response => {
+        dispatch(setCurrentWeek(response.data))
+        const today = new Date();
+        if(today.getMonth() <= 1 && parseInt(response.data) <= 5){
+          dispatch(setCurrentType("POST"));
+        } else {
+          dispatch(setCurrentType("REG"))
+        }
+      }).catch(error => console.log(error))
+  }, [])
+  
 
 
 

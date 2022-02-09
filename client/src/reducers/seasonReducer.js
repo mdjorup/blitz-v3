@@ -11,14 +11,14 @@ export const seasonSlice = createSlice({
 
   },
   reducers: {
-    setCurrentYear: (state) => {
-      
+    setCurrentYear: (state, action) => {
+      state.year = action.payload
     },
-    setCurrentType: (state) => {
-      
+    setCurrentType: (state, action) => {
+      state.type = action.payload
     },
-    setCurrentWeek: (state) => {
-      
+    setCurrentWeek: (state, action) => {
+      state.week = action.payload
     },
     
 
