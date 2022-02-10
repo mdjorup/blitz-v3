@@ -36,22 +36,22 @@ function App() {
 
   }, [])
 
-  useEffect(() => {
-    axios.get(`https://api.sportsdata.io/v3/nfl/scores/json/CurrentSeason?key=${API_KEY}`)
-      .then(response => {
-        dispatch(setCurrentYear(response.data))
-      }).catch(error => console.log(error))
-    axios.get(`https://api.sportsdata.io/v3/nfl/scores/json/CurrentWeek?key=${API_KEY}`)
-      .then(response => {
-        dispatch(setCurrentWeek(response.data))
-        const today = new Date();
-        if(today.getMonth() <= 1 && parseInt(response.data) <= 5){
-          dispatch(setCurrentType("POST"));
-        } else {
-          dispatch(setCurrentType("REG"))
-        }
-      }).catch(error => console.log(error))
-  }, [])
+  // useEffect(() => {
+  //   axios.get(`https://api.sportsdata.io/v3/nfl/scores/json/CurrentSeason?key=${API_KEY}`)
+  //     .then(response => {
+  //       dispatch(setCurrentYear(response.data))
+  //     }).catch(error => console.log(error))
+  //   axios.get(`https://api.sportsdata.io/v3/nfl/scores/json/CurrentWeek?key=${API_KEY}`)
+  //     .then(response => {
+  //       dispatch(setCurrentWeek(response.data))
+  //       const today = new Date();
+  //       if(today.getMonth() <= 1 && parseInt(response.data) <= 5){
+  //         dispatch(setCurrentType("POST"));
+  //       } else {
+  //         dispatch(setCurrentType("REG"))
+  //       }
+  //     }).catch(error => console.log(error))
+  // }, [])
   
 
 

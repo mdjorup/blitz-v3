@@ -9,18 +9,29 @@ import {connect, useDispatch, useSelector} from 'react-redux';
 import { setLogos } from '../reducers/logosReducer';
 
 
-const PickEntry = ({GameKey, Date, AwayTeam, AwayTeamStyle, HomeTeam, HomeTeamStyle, IsInProgress, IsOver}) => {
-    
+const PickEntry = ({GameKey, Date, AwayTeam, AwayTeamStyle, HomeTeam, HomeTeamStyle, IsInProgress, IsOver, pick}) => {
+  
+  const unpickedStyle = "h-auto flex flex-1 p-2 items-center border-4 border-backdrop"
+  const pickedStyle = "h-auto flex flex-1 p-2 items-center border-4 border-white"
+
   return (
-    <div className='bg-focus rounded '>
-      {(IsOver || IsInProgress) && <div className=''>
+    <div className=''>
+      {(IsOver || IsInProgress) && <div className='my-5'>
         
       </div>}
-      {!IsOver && !IsInProgress && <div className=''>
-        {!AwayTeamStyle && "No away team style!"}
-        {AwayTeamStyle && "Away Team Style"}
-        {JSON.stringify(AwayTeamStyle)}
-        {JSON.stringify(HomeTeamStyle)}
+      {IsOver && !IsInProgress && <div className='flex'>
+        <div className={pick === AwayTeam ? pickedStyle : unpickedStyle} style={{'background-color': '#'+AwayTeamStyle.PrimaryColor}}>
+          <img className='w-14' src={AwayTeamStyle.Logo}/>
+          <p>{AwayTeamStyle.FullName}</p>
+        </div>
+        <div className=''>
+          @
+        </div>
+        <div className={pick === HomeTeam ? pickedStyle : unpickedStyle} style={{'background-color': '#'+HomeTeamStyle.PrimaryColor}}>
+          <p>{HomeTeamStyle.FullName}</p>
+          <img className='w-14' src={HomeTeamStyle.Logo}/>
+        </div>
+        
       </div>}
     </div>
   )
@@ -54,17 +65,15 @@ function MakePicks({user, logos}) {
     HomeTeam={game.HomeTeam}
     HomeTeamStyle={logos[game.HomeTeam]}
     IsInProgress={game.IsInProgress}
-    IsOver={game.IsOver}/>))
+    IsOver={game.IsOver}
+    pick='DAL'/>))
   }
 
   return (
     <div className='bg-backdrop min-h-screen'>
       <Header></Header>
-      <div className='top-20 text-white mx-80 h-20 '>
+      <div className='top-20 text-white mx-80'>
         {logos && games && renderGames()}
-        {logos && <p>Logos are here</p>}
-        {games && <p>Games are here</p>}
-        {logos && games && <p>Both logos and games are here</p>}
       </div>
     </div>
   );
