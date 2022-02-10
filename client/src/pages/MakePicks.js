@@ -5,31 +5,34 @@ import axios from 'axios';
 import Header from '../components/Header';
 
 //redux
-import {connect, useDispatch, useSelector} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import { setLogos } from '../reducers/logosReducer';
+import Button from '../components/Button';
 
 
-const PickEntry = ({GameKey, Date, AwayTeam, AwayTeamStyle, HomeTeam, HomeTeamStyle, IsInProgress, IsOver, pick}) => {
+const PickEntry = ({GameKey, Date, AwayTeam, AwayTeamStyle, HomeTeam, HomeTeamStyle, IsInProgress, IsOver, pick, handleSelection}) => {
   
-  const unpickedStyle = "h-auto flex flex-1 p-2 items-center border-4 border-backdrop"
-  const pickedStyle = "h-auto flex flex-1 p-2 items-center border-4 border-white"
+  const unpickedStyle = " flex flex-1 p-1 m-2 items-center justify-evenly border border-white cursor-pointer rounded-md"
+  const pickedStyle = " flex flex-1 p-1 m-2 items-center justify-evenly border border-lightgray bg-lightgray text-focus cursor-pointer rounded-md"
 
   return (
-    <div className=''>
+    <div className='bg-focus'>
       {(IsOver || IsInProgress) && <div className='my-5'>
         
       </div>}
       {IsOver && !IsInProgress && <div className='flex'>
-        <div className={pick === AwayTeam ? pickedStyle : unpickedStyle} style={{'background-color': '#'+AwayTeamStyle.PrimaryColor}}>
-          <img className='w-14' src={AwayTeamStyle.Logo}/>
+        <div className={pick === 'away' ? pickedStyle : unpickedStyle} 
+          onClick={() => handleSelection(GameKey, 'away')}>
+          <img className='w-12 h-12' src={AwayTeamStyle.Logo}/>
           <p>{AwayTeamStyle.FullName}</p>
         </div>
-        <div className=''>
-          @
+        <div className='flex-1 flex justify-center items-center text-xl'>
+          <p>@</p>
         </div>
-        <div className={pick === HomeTeam ? pickedStyle : unpickedStyle} style={{'background-color': '#'+HomeTeamStyle.PrimaryColor}}>
+        <div className={pick === 'home' ? pickedStyle : unpickedStyle}
+          onClick={() => handleSelection(GameKey, 'home')}>
           <p>{HomeTeamStyle.FullName}</p>
-          <img className='w-14' src={HomeTeamStyle.Logo}/>
+          <img className='w-12 h-12 ' src={HomeTeamStyle.Logo}/>
         </div>
         
       </div>}
@@ -40,8 +43,9 @@ const PickEntry = ({GameKey, Date, AwayTeam, AwayTeamStyle, HomeTeam, HomeTeamSt
 
 function MakePicks({user, logos}) {
 
-  const dispatch = useDispatch();
   const [games, setGames] = useState(null);
+
+  const [picks, setPicks] = useState({});
 
   const seasonInfo = useSelector((state) => state.season)
 
@@ -56,6 +60,24 @@ function MakePicks({user, logos}) {
 
   }, [])
 
+  useEffect(() => {
+    //GET request to get user picks
+  }, [])
+
+  const handleSelection = (gameKey, selection) => {
+    if(!picks.gameKey){
+      setPicks({...picks, [gameKey]: selection})
+    } else if(selection === 'away'){
+      setPicks({...picks, [gameKey]: 'home'})
+    } else if(selection === 'home'){
+      setPicks({...picks, [gameKey]: 'away'})
+    }
+  }
+
+  const handleSubmit = () => {
+    //POST request to send picks data to DB
+  }
+
   const renderGames = () => {
     return games.map((game) => (<PickEntry 
     GameKey={game.GameKey} 
@@ -66,14 +88,23 @@ function MakePicks({user, logos}) {
     HomeTeamStyle={logos[game.HomeTeam]}
     IsInProgress={game.IsInProgress}
     IsOver={game.IsOver}
-    pick='DAL'/>))
+    pick={picks[game.GameKey]}
+    handleSelection={handleSelection}/>))
   }
 
   return (
     <div className='bg-backdrop min-h-screen'>
       <Header></Header>
-      <div className='top-20 text-white mx-80'>
+      <div className='top-20 text-white mx-96'>
+        <div className=' flex justify-between items-center p-2 mt-5'>
+          <p className='text-3xl font-bold'>Make Picks</p>
+          <Button text='Reset' type='tertiary' onClick={() => setPicks({})}/>
+
+        </div>
         {logos && games && renderGames()}
+        <div className='flex justify-center pt-10 pb-96'>
+          <Button text='Submit' type='primary' onClick={handleSubmit}/>
+        </div>
       </div>
     </div>
   );
