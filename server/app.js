@@ -7,7 +7,8 @@ const port = 5000;
 
 var authRouter = require('./routes/authRoutes.js');
 var teamsRouter = require('./routes/teamsRoutes.js');
-var gamesRouter = require('./routes/gamesRoutes.js')
+var gamesRouter = require('./routes/gamesRoutes.js');
+var picksRouter = require('./routes/picksRoutes.js');
 
 
 const dbURI = process.env.dbURI;
@@ -41,6 +42,7 @@ mongoose.Promise = global.Promise;
 app.use('/auth', authRouter);
 app.use('/teams', teamsRouter);
 app.use('/games', gamesRouter);
+app.use('/picks', picksRouter);
 
 
 //error handling

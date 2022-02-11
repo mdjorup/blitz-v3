@@ -39,7 +39,7 @@ function Header({user}) {
       {/* header right  */}
       <div className='flex'>
         <div className='flex border-r border-white px-5'>
-          {!user && <Button text="Make Picks" type='tertiary' onClick={()=>navigate('/makepicks')}></Button>}
+          {user && <Button text="Make Picks" type='tertiary' onClick={()=>navigate('/makepicks')}></Button>}
           <Button text="Scores" type='tertiary' onClick={()=>navigate('/nfl/scores')}></Button>
           <Button text='NFL Standings' type='tertiary' onClick={()=>navigate('/nfl/standings')}></Button>
         </div>

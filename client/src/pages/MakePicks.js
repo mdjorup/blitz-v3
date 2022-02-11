@@ -21,16 +21,16 @@ const PickEntry = ({GameKey, Date, AwayTeam, AwayTeamStyle, HomeTeam, HomeTeamSt
         
       </div>}
       {IsOver && !IsInProgress && <div className='flex'>
-        <div className={pick === 'away' ? pickedStyle : unpickedStyle} 
-          onClick={() => handleSelection(GameKey, 'away')}>
+        <div className={pick === AwayTeam ? pickedStyle : unpickedStyle} 
+          onClick={() => handleSelection(GameKey, AwayTeam)}>
           <img className='w-12 h-12' src={AwayTeamStyle.Logo}/>
           <p>{AwayTeamStyle.FullName}</p>
         </div>
         <div className='flex-1 flex justify-center items-center text-xl'>
           <p>@</p>
         </div>
-        <div className={pick === 'home' ? pickedStyle : unpickedStyle}
-          onClick={() => handleSelection(GameKey, 'home')}>
+        <div className={pick === HomeTeam ? pickedStyle : unpickedStyle}
+          onClick={() => handleSelection(GameKey, HomeTeam)}>
           <p>{HomeTeamStyle.FullName}</p>
           <img className='w-12 h-12 ' src={HomeTeamStyle.Logo}/>
         </div>
@@ -62,20 +62,33 @@ function MakePicks({user, logos}) {
 
   useEffect(() => {
     //GET request to get user picks
+    const fetchPicks = async () => {
+      await axios.get(`http://localhost:5000/picks/${user.uid}/${seasonInfo.year}/${seasonInfo.type}/${seasonInfo.week}`)
+        .then(response => {
+          setPicks(response.data)
+        }).catch(error => {})
+    }
+    fetchPicks();
   }, [])
 
   const handleSelection = (gameKey, selection) => {
     if(!picks.gameKey){
       setPicks({...picks, [gameKey]: selection})
-    } else if(selection === 'away'){
-      setPicks({...picks, [gameKey]: 'home'})
-    } else if(selection === 'home'){
-      setPicks({...picks, [gameKey]: 'away'})
+    } else if(selection !== picks.gameKey){
+      setPicks({...picks, [gameKey]: selection})
+    } else if(selection !== picks.gameKey){
+      setPicks({...picks, [gameKey]: selection})
     }
   }
 
   const handleSubmit = () => {
     //POST request to send picks data to DB
+    axios.post(`http://localhost:5000/picks/${user.uid}/${seasonInfo.year}/${seasonInfo.type}/${seasonInfo.week}`, picks)
+      .then(response => {
+        console.log(response)
+      }).catch(error => {
+        console.log(error)
+      })
   }
 
   const renderGames = () => {
