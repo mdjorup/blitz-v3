@@ -7,7 +7,7 @@ export const seasonSlice = createSlice({
   initialState: {
     year: '2021',
     type: 'REG',
-    week: '1',
+    week: '10',
 
   },
   reducers: {

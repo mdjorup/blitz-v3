@@ -7,11 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 import {connect} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 
 
-const TeamEntry = ({name, logo}) => {
+const TeamEntry = ({nameKey, name, logo}) => {
+
+  const navigate = useNavigate();
+
   return(
-    <div className='flex items-center justify-between px-5 font-light hover:text-lightblue cursor-pointer'>
+    <div className='flex items-center justify-between px-5 font-light hover:text-lightblue cursor-pointer'
+      onClick={()=>navigate(`/nfl/teams/${nameKey}`)}>
       <p className=''>{name.substr(name.lastIndexOf(' ') + 1)}</p>
       {logo && <img className='h-8 w-8' src={logo}/>}
 
@@ -35,7 +40,7 @@ function Home() {
       <div className='flex top-20 text-white px-40 pt-5'>
         <div className='flex-none w-52 bg-focus rounded mx-5'>
           <p className='text-xl font-semibold p-3 border-b border-subtle mb-1'>Teams</p>
-          {logos && Object.keys(logos).map((key) => (<TeamEntry key={key} name={logos[key].FullName} logo={logos[key].Logo}/>))}
+          {logos && Object.keys(logos).map((key) => (<TeamEntry key={key} nameKey={key} name={logos[key].FullName} logo={logos[key].Logo}/>))}
 
         </div>
         <div className='flex-1'>

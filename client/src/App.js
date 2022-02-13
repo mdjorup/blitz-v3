@@ -6,16 +6,20 @@ import Home from './pages/Home.js'
 import MakePicks from './pages/MakePicks.js'
 import NFLStandings from './pages/NFLStandings.js'
 import Scores from './pages/Scores.js'
+import TeamPage from './pages/TeamPage';
 
 import { useEffect } from 'react';
+
+import {auth} from './firebase.js'
 
 import axios from 'axios'
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { API_KEY } from './admin';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLogos } from './reducers/logosReducer';
 import { setCurrentType, setCurrentYear, setCurrentWeek } from './reducers/seasonReducer';
+import { setUser } from './reducers/userReducer';
 
 
 function App() {
@@ -24,6 +28,15 @@ function App() {
 
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.user.user);
+
+
+  useEffect(() => {
+    auth.onAuthStateChanged(firebaseUser => {
+      dispatch(setUser(firebaseUser));
+    })
+  })
+  
 
   useEffect(() => {
     const fetchLogos = async () => {
@@ -68,6 +81,7 @@ function App() {
         <Route exact path='/makepicks' element={<MakePicks />}/>
         <Route exact path='/nfl/standings' element={<NFLStandings />}/>
         <Route exact path='/nfl/scores' element={<Scores />}/>
+        <Route path='/nfl/teams/:team' element={<TeamPage />} />
       </Routes>
       
     </Router>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 //components
 import Header from '../components/Header';
@@ -43,6 +44,8 @@ const PickEntry = ({GameKey, Date, AwayTeam, AwayTeamStyle, HomeTeam, HomeTeamSt
 
 function MakePicks({user, logos}) {
 
+  const navigate = useNavigate();
+
   const [games, setGames] = useState(null);
 
   const [picks, setPicks] = useState({});
@@ -85,7 +88,10 @@ function MakePicks({user, logos}) {
     //POST request to send picks data to DB
     axios.post(`http://localhost:5000/picks/${user.uid}/${seasonInfo.year}/${seasonInfo.type}/${seasonInfo.week}`, picks)
       .then(response => {
+        
         console.log(response)
+        navigate('/');
+        
       }).catch(error => {
         console.log(error)
       })
