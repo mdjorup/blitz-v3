@@ -14,6 +14,9 @@ module.exports = {
       'subtle': '#333344',
       'warning': '#FBBF24' ,
       'error': '#DC2626',
+      'win': '#22c55e',
+      'loss': '#DC2626',
+      'tie': '#fcd34d',
     }
   },
   plugins: [],

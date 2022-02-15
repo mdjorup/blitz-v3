@@ -7,16 +7,46 @@ import axios from 'axios';
 import {useSelector} from 'react-redux'
 
 
-const Game = ({gameData, awayLogo, homeLogo}) => {
+const Game = ({gameData, awayLogo, homeLogo, teamPage}) => {
 
   const gameDate = new Date(gameData.Date)
 
+  const centerStyling = () => {
+    
+    if(teamPage === gameData.AwayTeam){
+      if(gameData.AwayScore > gameData.HomeScore){
+        return 'text-win'
+      } else if(gameData.AwayScore < gameData.HomeScore) {
+        return 'text-loss'
+      } else {
+        return 'text-tie'
+      }
+    } else {
+      if(gameData.AwayScore < gameData.HomeScore){
+        return 'text-win'
+      } else if(gameData.AwayScore > gameData.HomeScore) {
+        return 'text-loss'
+      } else {
+        return 'text-tie'
+      }
+    }
+  }
+
 
   return (
-    <div className='bg-focus flex h-10 items-center'>
-      <p className=''>{gameDate.getUTCMonth()+1}/{gameDate.getUTCDate()}</p>
-      <img className='h-4/5' src={awayLogo}/>
-      <img className='h-4/5' src={homeLogo}/>
+    <div className='bg-focus flex h-12 items-center border-b border-gray'>
+      <p className='px-2'>{gameDate.getUTCMonth()+1}/{gameDate.getUTCDate()}</p>
+      <div className='flex justify-evenly items-center w-full'> 
+        <img className='h-8 w-8' src={awayLogo}/>
+        <p>{gameData.AwayTeam}</p>
+        {gameData.Quarter && <div className='flex flex-col items-center justify-center p-1 rounded'> 
+          <p className={'text-xs'}>{gameData.AwayScore}-{gameData.HomeScore}</p>
+          <p className='text-xs'>Final</p>
+        </div>}
+        {!gameData.Quarter && <p>@</p>}
+        <p>{gameData.HomeTeam}</p>
+        <img className='h-8 w-8' src={homeLogo}/>
+      </div>
     </div>
   )
 
@@ -76,7 +106,7 @@ function TeamPage() {
         </div>
         {/* Team Body */}
         <div className='rounded-b-xl'>
-          {schedule && schedule.map((game) => (<Game gameData={game} awayLogo={logos[game.AwayTeam].Logo} homeLogo={logos[game.HomeTeam].Logo}/>) )}
+          {schedule && schedule.map((game) => (<Game gameData={game} awayLogo={logos[game.AwayTeam].Logo} homeLogo={logos[game.HomeTeam].Logo} teamPage={team}/>) )}
         </div>
 
       </div>
