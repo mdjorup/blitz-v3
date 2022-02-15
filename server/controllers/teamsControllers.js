@@ -39,10 +39,40 @@ const getAllLogos = (req, res) => {
     .catch(error => {
       console.log(error);
     })
-  
+}
+
+const getStandings = (req, res) => {
+  console.log("GET standings")
+  const standingsUrl = `https://api.sportsdata.io/v3/nfl/scores/json/Standings/2021?key=${process.env.API_KEY}`
+
+  axios.get(standingsUrl)
+    .then(response => {
+      const data = response.data.filter(entry => entry.Team === req.params.team)
+      res.send(data[0])
+    }).catch(error => {
+      console.log(error)
+    })
+
+}
+
+const getSchedule = (req, res) => {
+  console.log("GET schedule")
+  const scheduleUrl = `https://api.sportsdata.io/v3/nfl/scores/json/Scores/2021?key=${process.env.API_KEY}`
+
+  axios.get(scheduleUrl)
+    .then(response => {
+      const data = response.data
+        .filter(entry => entry.AwayTeam === req.params.team || entry.HomeTeam === req.params.team)
+        .map(({GameKey, Week, Date, AwayTeam, HomeTeam, AwayScore, HomeScore, Quarter, TimeRemaining}) => ({GameKey, Week, Date, AwayTeam, HomeTeam, AwayScore, HomeScore, Quarter, TimeRemaining}))
+      res.send(data)
+    }).catch(error => {
+      console.log(error)
+    })
 }
 
 module.exports = {
   getAllTeams,
   getAllLogos,
+  getStandings,
+  getSchedule,
 }
