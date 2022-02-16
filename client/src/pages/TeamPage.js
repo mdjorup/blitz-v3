@@ -11,30 +11,9 @@ const Game = ({gameData, awayLogo, homeLogo, teamPage}) => {
 
   const gameDate = new Date(gameData.Date)
 
-  const centerStyling = () => {
-    
-    if(teamPage === gameData.AwayTeam){
-      if(gameData.AwayScore > gameData.HomeScore){
-        return 'text-win'
-      } else if(gameData.AwayScore < gameData.HomeScore) {
-        return 'text-loss'
-      } else {
-        return 'text-tie'
-      }
-    } else {
-      if(gameData.AwayScore < gameData.HomeScore){
-        return 'text-win'
-      } else if(gameData.AwayScore > gameData.HomeScore) {
-        return 'text-loss'
-      } else {
-        return 'text-tie'
-      }
-    }
-  }
-
 
   return (
-    <div className='bg-focus flex h-12 items-center border-b border-gray'>
+    <div className='bg-focus flex h-10 items-center border-b border-gray'>
       <p className='px-2'>{gameDate.getUTCMonth()+1}/{gameDate.getUTCDate()}</p>
       <div className='flex justify-evenly items-center w-full'> 
         <img className='h-8 w-8' src={awayLogo}/>

@@ -47,6 +47,9 @@ const getStandings = (req, res) => {
 
   axios.get(standingsUrl)
     .then(response => {
+      if(req.params.team === 'all'){
+        return res.send(response.data)
+      }
       const data = response.data.filter(entry => entry.Team === req.params.team)
       res.send(data[0])
     }).catch(error => {

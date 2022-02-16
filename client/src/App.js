@@ -5,7 +5,6 @@ import Group from './pages/Group.js'
 import Home from './pages/Home.js'
 import MakePicks from './pages/MakePicks.js'
 import NFLStandings from './pages/NFLStandings.js'
-import Scores from './pages/Scores.js'
 import TeamPage from './pages/TeamPage';
 
 import { useEffect } from 'react';
@@ -80,7 +79,6 @@ function App() {
         <Route exact path='/groups/:groupid' element={<Group />}/>
         <Route exact path='/makepicks' element={<MakePicks />}/>
         <Route exact path='/nfl/standings' element={<NFLStandings />}/>
-        <Route exact path='/nfl/scores' element={<Scores />}/>
         <Route path='/nfl/teams/:team' element={<TeamPage />} />
       </Routes>
       
